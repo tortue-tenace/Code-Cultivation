@@ -7,7 +7,7 @@ class Plant:
     def show(self):
         print(f"{self.name}: {self.height}cm, {self.age} days old")
 
-    def grow(self):
+    def grow_height(self):
         if self.age in range(0, 30):
             self.height = self.height + 1
         else:
@@ -24,7 +24,7 @@ def ft_plant_growth():
     initial_height = plant.height
     for i in range(1, 8):
         print(f"=== Day {i} ===")
-        plant.grow()
+        plant.grow_height()
         plant.grow_older()
         plant.show()
     total_growth = plant.height - initial_height

@@ -16,6 +16,7 @@ class Plant:
     def grow_older(self) -> None:
         self.age = self.age + 1
 
+
 def ft_plant_factory(plants_data: list) -> None:
     plants = []
     for data in plants_data:
@@ -36,4 +37,3 @@ if __name__ == "__main__":
     ]
     print("=== Plant Factory Output ===")
     ft_plant_factory(plants_data)
-
