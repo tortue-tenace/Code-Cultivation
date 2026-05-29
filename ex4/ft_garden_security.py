@@ -54,4 +54,4 @@ def ft_plant_factory(plants_data: list) -> None:
 
 if __name__ == "__main__":
     plant = Plant("saucisse", 12, 15)
-    print(plant._age)
+    plant.set_age()
