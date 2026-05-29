@@ -1,96 +1,99 @@
 class Plant:
     def __init__(self, name: str, height: float, age: int) -> None:
-        self.name = name
-        self.age = age
-        self.height = height
+        self._name = name
+        self._age = age
+        self._height = height
 
     def show(self) -> None:
-        print(f"{self.name}: {self.height}cm, {self.age} days old")
+        print(f"{self._name}: {self._height}cm, {self._age} days old")
 
-    def growheight(self) -> None:
-        if self.age in range(0, 30):
-            self.height = self.height + 1
+    def grow(self) -> None:
+        if self._age in range(0, 30):
+            self._height = self._height + 1
         else:
-            self.height = self.height + 0.5
+            self._height = self._height + 0.5
 
-    def grow_older(self) -> None:
-        self.age = self.age + 1
+    def age(self) -> None:
+        self._age = self._age + 1
 
-    def setage(self) -> None:
-        newage = int(input(f"Enter {self.name.capitalize()} new age: "))
-        if newage >= 0:
-            self.age = newage
-            print(f"{self.name.capitalize()} new age updated: {newage}")
-        elif newage < 0:
-            return (print(f"{self.name.capitalize()} age can't be negative"))
+    def set_age(self, new_age: int) -> None:
+        if new_age >= 0:
+            self._age = new_age
+            print(f"Age updated:  {new_age} days")
+        else:
+            print(f"{self._name.capitalize()}:  Error, age can't be negative")
 
-    def setheight(self) -> None:
-        newheight = int(input(f"Enter {self.name.capitalize()}\
-         new height: "))
-        if newheight >= 0:
-            self.height = newheight
-            print(f"{self.name.capitalize()}\
-             new height updated: {newheight}")
-        elif newheight < 0:
-            return (print(f"{self.name.capitalize()}\
-             height can't be negative"))
+    def set_height(self, new_height: float) -> None:
+        if new_height >= 0:
+            self._height = new_height
+            print(f"Height updated:  {new_height}cm")
+        else:
+            print(f"{self._name.capitalize()}:  "
+                  f"Error, height can't be negative")
 
-    def getheight(self) -> None:
-        print(self.height)
+    def get_height(self) -> float:
+        return self._height
 
-    def getage(self) -> None:
-        print(self.age)
+    def get_age(self) -> int:
+        return self._age
 
 
 class Flower(Plant):
-    def __init__(self, name: str, height: float, age: int, color: str) -> None:
+    def __init__(self, name: str, height: float,
+                 age: int, color: str) -> None:
         super().__init__(name, height, age)
-        self.color = color
-        self.bloom = False
+        self._color = color
+        self._bloomed = False
+
+    def bloom(self) -> None:
+        self._bloomed = True
 
     def show(self) -> None:
         super().show()
-        print(f"Color: {self.color}")
-        if self.bloom:
-            print(f"{self.name.capitalize()} has bloomed")
+        print(f"Color: {self._color}")
+        if self._bloomed:
+            print(f"{self._name.capitalize()} is blooming beautifully!")
         else:
-            print(f"{self.name. capitalize()} has not bloomed yet")
-
-    def bloomed(self) -> None:
-        if not self.bloom:
-            self.bloom = True
+            print(f"{self._name.capitalize()} has not bloomed yet")
 
 
 class Tree(Plant):
     def __init__(self, name: str, height: float,
-                 age: int, trunk_diameter: int) -> None:
+                 age: int, trunk_diameter: float) -> None:
         super().__init__(name, height, age)
-        self.trunk_diameter = trunk_diameter
+        self._trunk_diameter = trunk_diameter
 
     def produce_shade(self) -> None:
-        if self.height == 0 or self.trunk_diameter == 0:
-            print(f"{self.name.capitalize()} produces no shade.")
+        if self._height == 0 or self._trunk_diameter == 0:
+            print(f"{self._name.capitalize()} produces no shade.")
         else:
-            print(f"Tree {self.name.capitalize()} now produces a shade of "
-                  f"{self.height}cm long and {self.trunk_diameter}cm wide.")
+            print(f"Tree {self._name.capitalize()} now produces a shade of "
+                  f"{self._height}cm long and {self._trunk_diameter}cm wide.")
 
     def show(self) -> None:
         super().show()
-        print(f"Trunk diameter {self.trunk_diameter}cm")
+        print(f"Trunk diameter: {self._trunk_diameter}cm")
 
 
 class Vegetable(Plant):
     def __init__(self, name: str, height: float,
-                 age: int, harvest_season: str,
-                 nutritional_value: int) -> None:
+                 age: int, harvest_season: str) -> None:
         super().__init__(name, height, age)
-        self.harvest_season = harvest_season
-        self.nutritional_value = nutritional_value
+        self._harvest_season = harvest_season
+        self._nutritional_value = 0
 
-    def show(self):
+    def grow(self) -> None:
+        super().grow()
+        self._nutritional_value += 1
+
+    def age(self) -> None:
+        super().age()
+        self._nutritional_value += 1
+
+    def show(self) -> None:
         super().show()
-        print(f"Harvest season: {self.harvest_season.capitalize()}")
-        print(f"Nutritional value: {self.nutritional_value}")
+        print(f"Harvest season: {self._harvest_season.capitalize()}")
+        print(f"Nutritional value: {self._nutritional_value}")
 
 
 if __name__ == "__main__":
@@ -100,7 +103,7 @@ if __name__ == "__main__":
     rose = Flower("Rose", 15.0, 10, "red")
     rose.show()
     print("[asking the rose to bloom]")
-    rose.bloomed()
+    rose.bloom()
     rose.show()
 
     print("=== Tree")
@@ -110,10 +113,10 @@ if __name__ == "__main__":
     oak.produce_shade()
 
     print("=== Vegetable")
-    tomato = Vegetable("Tomato", 5.0, 10, "April", 15)
+    tomato = Vegetable("Tomato", 5.0, 10, "April")
     tomato.show()
     print("[make tomato grow and age for 20 days]")
     for _ in range(20):
-        tomato.growheight()
-        tomato.grow_older()
+        tomato.grow()
+        tomato.age()
     tomato.show()
